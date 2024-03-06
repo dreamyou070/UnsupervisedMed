@@ -30,9 +30,9 @@ def main(args) :
         for sub_gz in sub_gzs :
             if 'brainmask' in sub_gz :
                 # (3) brain mask dir
-                sub_gz_dir = os.path.join(folder_dir, sub_gz, convert_mode = 'L')
+                sub_gz_dir = os.path.join(folder_dir, sub_gz)
                 for i in range(40, 100) :
-                    pil = check_img(sub_gz_dir, trg_axis = i)
+                    pil = check_img(sub_gz_dir, trg_axis = i, convert_mode = 'L')
                     pil.save(os.path.join(gt_dir, f'{folder}_{i}.png'))
             elif 'brain.nii' in sub_gz :
                 # (2) skull stripped
