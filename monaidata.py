@@ -8,7 +8,7 @@ import torch
 import torch.nn.functional as F
 import sys
 #from monai import transforms
-from monai.apps import DecathlonDataset
+from monai.apps import DecathlonDataset, MedNISTDataset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -52,18 +52,9 @@ def main() :
     print(f"Length of training data: {len(train_ds)}")
     print(f'Train image shape {train_ds[0]["image"].shape}')
 
-    val_ds = DecathlonDataset(
-        root_dir=root_dir,
-        task="Task01_BrainTumour",
-        section="validation",
-        cache_rate=1.0,  # you may need a few Gb of RAM... Set to 0 otherwise
-        num_workers=4,
-        download=False,  # Set download to True if the dataset hasnt been downloaded yet
-        seed=0,
-        transform=train_transforms,
-    )
-    print(f"Length of training data: {len(val_ds)}")
-    print(f'Validation Image shape {val_ds[0]["image"].shape}')
+    apps.MedNISTDataset(root_dir, section, transform=(), download=False, seed=0, val_frac=0.1,
+                        test_frac=0.1, cache_num=9223372036854775807, cache_rate=1.0, num_workers=1, progress=True, copy_cache=True, as_contiguous=True, runtime_cache=False)[source]
+
 
 if __name__ == '__main__' :
     main()
