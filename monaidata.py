@@ -7,16 +7,18 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import sys
-from monai import transforms
+#from monai import transforms
 from monai.apps import DecathlonDataset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 def main() :
+
     print(f'step 1. setup brats dataset')
     channel = 0  # 0 = Flair
     assert channel in [0, 1, 2, 3], "Choose a valid channel"
+    """
     train_transforms = transforms.Compose(
         [
             transforms.LoadImaged(keys=["image", "label"]),
@@ -34,7 +36,7 @@ def main() :
             transforms.Lambdad(keys=["slice_label"], func=lambda x: 2.0 if x.sum() > 0 else 1.0),
         ]
     )
-
+    """
     root_dir = './'
 
     train_ds = DecathlonDataset(
