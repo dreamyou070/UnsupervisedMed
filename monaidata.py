@@ -7,17 +7,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import sys
-from monai import transforms
-from monai.apps import DecathlonDataset
-from monai.config import print_config
-from monai.data import DataLoader
-from monai.utils import set_determinism
-from torch.cuda.amp import GradScaler, autocast
-from tqdm import tqdm
-
-from generative.inferers import DiffusionInferer
-from generative.networks.nets.diffusion_model_unet import DiffusionModelUNet
-from generative.networks.schedulers.ddim import DDIMScheduler
+from monaidata import transforms
+from monaidata.apps import DecathlonDataset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -43,6 +34,7 @@ def main() :
             transforms.Lambdad(keys=["slice_label"], func=lambda x: 2.0 if x.sum() > 0 else 1.0),
         ]
     )
+    
     root_dir = './'
 
     train_ds = DecathlonDataset(
@@ -53,7 +45,7 @@ def main() :
         num_workers=4,
         download=False,  # Set download to True if the dataset hasnt been downloaded yet
         seed=0,
-        transform=train_transforms,
+        transform=None #train_transforms,
     )
     print(f"Length of training data: {len(train_ds)}")
     print(f'Train image shape {train_ds[0]["image"].shape}')

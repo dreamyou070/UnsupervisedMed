@@ -16,7 +16,7 @@ from losses import PerceptualLoss, PatchAdversarialLoss
 from model.patchgan_discriminator import PatchDiscriminator
 from torch.nn import L1Loss
 from diffusers import AutoencoderKL
-from monai.networks.layers import Act
+from monaidata.networks.layers import Act
 from PIL import Image
 import numpy as np
 from safetensors.torch import load_file
