@@ -45,8 +45,9 @@ def main(args) :
                 sub_gz_dir = os.path.join(folder_dir, sub_gz)
                 for i in range(40, 100) :
                     pil = check_img(sub_gz_dir, trg_axis = i)
+                    print(pil)
                     save_dir = os.path.join(rgb_dir, f'{folder}_{i}.png')
-                    print(f'save_dir = {save_dir}')
+                    #print(f'save_dir = {save_dir}')
                     #pil.save(save_dir)
 
 
