@@ -56,5 +56,5 @@ if __name__ == '__main__' :
                         default='/home/dreamyou070/MyData/anomaly_detection/NFBS_Dataset_SY')
     parser.add_argument('--base_dir', type=str,
                         default = '/home/dreamyou070/MyData/anomaly_detection/NFBS_Dataset')
-    args=parser.parse_argument()
+    args=parser.parse_args()
     main(args)
