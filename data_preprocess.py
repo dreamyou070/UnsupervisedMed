@@ -13,11 +13,14 @@ def main(args) :
 
     brain_ex_folder = args.brain_ex_folder
     os.makedirs(brain_ex_folder, exist_ok = True)
-    gt_dir = os.path.join(brain_ex_folder, 'gt')
+    train_folder = os.path.join(brain_ex_folder, 'train')
+    os.makedirs(train_folder, exist_ok = True)
+
+    gt_dir = os.path.join(train_folder, 'gt')
     os.makedirs(gt_dir, exist_ok = True)
-    rgb_dir = os.path.join(brain_ex_folder, 'rgb')
+    rgb_dir = os.path.join(train_folder, 'rgb')
     os.makedirs(rgb_dir, exist_ok=True)
-    skull_stripped_dir = os.path.join(brain_ex_folder, 'skull_stripped')
+    skull_stripped_dir = os.path.join(train_folder, 'skull_stripped')
     os.makedirs(skull_stripped_dir, exist_ok=True)
 
     folders = os.listdir(args.base_dir)
