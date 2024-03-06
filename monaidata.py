@@ -24,7 +24,7 @@ def main() :
             transforms.LoadImaged(keys=["image", "label"]),
             transforms.EnsureChannelFirstd(keys=["image", "label"]),
             transforms.Lambdad(keys=["image"], func=lambda x: x[channel, :, :, :]),
-            transforms.AddChanneld(keys=["image"]),
+           #transforms.AddChanneld(keys=["image"]),
             transforms.EnsureTyped(keys=["image", "label"]),
             transforms.Orientationd(keys=["image", "label"], axcodes="RAS"),
             transforms.Spacingd(keys=["image", "label"], pixdim=(3.0, 3.0, 2.0), mode=("bilinear", "nearest")),
@@ -45,14 +45,14 @@ def main() :
         section="training",
         cache_rate=1.0,  # you may need a few Gb of RAM... Set to 0 otherwise
         num_workers=4,
-        download=False,  # Set download to True if the dataset hasnt been downloaded yet
+        download=True,  # Set download to True if the dataset hasnt been downloaded yet
         seed=0,
         transform=train_transforms,
     )
     print(f"Length of training data: {len(train_ds)}")
     print(f'Train image shape {train_ds[0]["image"].shape}')
 
-    
+
 
 if __name__ == '__main__' :
     main()
