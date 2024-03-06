@@ -7,7 +7,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import sys
-#from monai import transforms
+from monai import transforms
 from monai.apps import DecathlonDataset, MedNISTDataset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
@@ -18,7 +18,7 @@ def main() :
     print(f'step 1. setup brats dataset')
     channel = 0  # 0 = Flair
     assert channel in [0, 1, 2, 3], "Choose a valid channel"
-    """
+
     train_transforms = transforms.Compose(
         [
             transforms.LoadImaged(keys=["image", "label"]),
@@ -36,7 +36,7 @@ def main() :
             transforms.Lambdad(keys=["slice_label"], func=lambda x: 2.0 if x.sum() > 0 else 1.0),
         ]
     )
-    """
+
     root_dir = './'
 
     train_ds = DecathlonDataset(
@@ -47,14 +47,12 @@ def main() :
         num_workers=4,
         download=False,  # Set download to True if the dataset hasnt been downloaded yet
         seed=0,
-        transform=None #train_transforms,
+        transform=train_transforms,
     )
     print(f"Length of training data: {len(train_ds)}")
     print(f'Train image shape {train_ds[0]["image"].shape}')
 
-    apps.MedNISTDataset(root_dir, section, transform=(), download=False, seed=0, val_frac=0.1,
-                        test_frac=0.1, cache_num=9223372036854775807, cache_rate=1.0, num_workers=1, progress=True, copy_cache=True, as_contiguous=True, runtime_cache=False)[source]
-
+    
 
 if __name__ == '__main__' :
     main()
