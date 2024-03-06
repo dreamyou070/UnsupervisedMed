@@ -2,11 +2,11 @@ import os
 import argparse
 import nibabel as nib
 from PIL import Image
-def check_img(gz_dir, trg_axis = 100) :
+def check_img(gz_dir, trg_axis = 100, convert_mode = 'RGB') :
     proxy = nib.load(gz_dir)
     arr = proxy.get_fdata()
     trg = arr[:,:,trg_axis]
-    trg_pil = Image.fromarray(trg)
+    trg_pil = Image.fromarray(trg).convert(convert_mode)
     return trg_pil
 
 def main(args) :
@@ -30,25 +30,23 @@ def main(args) :
         for sub_gz in sub_gzs :
             if 'brainmask' in sub_gz :
                 # (3) brain mask dir
-                sub_gz_dir = os.path.join(folder_dir, sub_gz)
+                sub_gz_dir = os.path.join(folder_dir, sub_gz, convert_mode = 'L')
                 for i in range(40, 100) :
                     pil = check_img(sub_gz_dir, trg_axis = i)
-                    #pil.save(os.path.join(gt_dir, f'{folder}_{i}.png'))
+                    pil.save(os.path.join(gt_dir, f'{folder}_{i}.png'))
             elif 'brain.nii' in sub_gz :
                 # (2) skull stripped
                 sub_gz_dir = os.path.join(folder_dir, sub_gz)
                 for i in range(40, 100) :
                     pil = check_img(sub_gz_dir, trg_axis = i)
-                    #pil.save(os.path.join(skull_stripped_dir, f'{folder}_{i}.png'))
+                    pil.save(os.path.join(skull_stripped_dir, f'{folder}_{i}.png'))
             else :
                 # (1) full skull
                 sub_gz_dir = os.path.join(folder_dir, sub_gz)
                 for i in range(40, 100) :
                     pil = check_img(sub_gz_dir, trg_axis = i)
-                    print(pil)
                     save_dir = os.path.join(rgb_dir, f'{folder}_{i}.png')
-                    #print(f'save_dir = {save_dir}')
-                    #pil.save(save_dir)
+                    pil.save(save_dir)
 
 
 
