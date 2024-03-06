@@ -7,8 +7,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import sys
-from monaidata import transforms
-from monaidata.apps import DecathlonDataset
+from monai import transforms
+from monai.apps import DecathlonDataset
 
 torch.multiprocessing.set_sharing_strategy("file_system")
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -34,7 +34,7 @@ def main() :
             transforms.Lambdad(keys=["slice_label"], func=lambda x: 2.0 if x.sum() > 0 else 1.0),
         ]
     )
-    
+
     root_dir = './'
 
     train_ds = DecathlonDataset(
